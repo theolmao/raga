@@ -1,19 +1,14 @@
-import adapterAuto from '@sveltejs/adapter-auto'
-import adapterVercel from '@sveltejs/adapter-vercel'
-import adapterNode from '@sveltejs/adapter-node'
+import adapter from '@sveltejs/adapter-netlify';
 
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
-
-const deployTarget = process.env.DEPLOY_TARGET || 'auto'; // Default to 'auto'
-
-// const adapterVercelConfig = {
-// 	runtime: 'nodejs18.x'
-// }
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: deployTarget === 'auto' ? adapterVercel() : adapterNode()
+		adapter: adapter({
+			edge: false,
+			split: false
+		})
 	},
 	preprocess: vitePreprocess()
 };
